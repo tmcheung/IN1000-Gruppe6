@@ -92,23 +92,27 @@ class Studentsystem:
         if studenten == None:
             studenten = Student(navn)
             self._studentListe.append(studenten)
+        else:
+            print("Studenten finnes allerede")
 
     def leggTilFag(self, navn):
         faget = self.finnFag(navn)
         if faget == None:
             faget = Fag(navn)
             self._fagListe.append(faget)
+        else:
+            print("Faget finnes allerede")
 
 
     def leggTilStudentIFag(self):
         studenten = self.finnStudent(input("Skriv studentnavn"))
         if studenten == None:
-            print("Finner ikke student, registrer studenten først for å legge til fag")
+            print("Finner ikke student, registrer studenten forst for a legge til fag")
             return
 
         faget = self.finnFag(input("Skriv fagnavn"))
         if faget == None:
-            print("Finner ikke fag, registrer faget først for å legge til student")
+            print("Finner ikke fag, registrer faget forst for a legge til student")
             return
 
         if studenten.tarFag(faget):
@@ -120,13 +124,30 @@ class Studentsystem:
     def ordelokke(self):
         svar = ""
         while svar != "q":
-
-            svar = input(self.menyOversikt())
+            svar = str(input(self.menyOversikt())).strip("\n")
+            if svar == "1":
+                self.leggTilStudent(input("Skriv studentnavn"))
+            elif svar == "2":
+                self.leggTilFag(input("Skriv fagnavn"))
+            elif svar == "3":
+                self.leggTilStudentIFag()
+            elif svar == "4":
+                self.skrivFag()
+            elif svar == "5":
+                self.skrivStudent()
+            elif svar == "6":
+                self.finnStudentMedFlestFag()
+            elif svar == "7":
+                self.finnFagMedFlestStudenter()
+            elif svar == "8":
+                self.oversikt()
+            elif svar != "q":
+                print("Ugyldig input")
 
 
     def menyOversikt(self):
         return\
-        """
+        ("""
         Meny:
 
         1: Legg til ny student
@@ -136,6 +157,7 @@ class Studentsystem:
         5: Skriv ut fag ved student
         6: Finn student med flest fag
         7: Finn fag med flest studenter
+        8: Oversikt over fag og studenter
         q: Avslutt program
 
-        """
+        """)
